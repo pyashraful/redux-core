@@ -1,3 +1,6 @@
+const redux = require("redux");
+const createStore = redux.createStore;
+
 const BUY_CAKE = "BUY_CAKE";
 
 function buyCake() {
@@ -21,6 +24,17 @@ const reducer = (state = initialState, action) => {
       };
 
     default:
-      throw new Error(`wrong action type : ${action.type}`);
+      return state;
   }
 };
+
+const store = createStore(reducer);
+console.log("initialState is ", store.getState());
+const unsubscribe = store.subscribe(() =>
+  console.log("update state:", store.getState())
+);
+store.dispatch(buyCake());
+store.dispatch(buyCake());
+store.dispatch(buyCake());
+store.dispatch(buyCake());
+unsubscribe();
